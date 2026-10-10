@@ -1,0 +1,26 @@
+<section class="tarjeta formulario-tarjeta" id="formulario-producto" aria-labelledby="titulo-formulario">
+  <header class="cabecera-formulario">
+    <span class="icono-formulario"><app-icono nombre="mas" /></span>
+    <div><h2 id="titulo-formulario">Añadir producto</h2><p>Completa todos los campos</p></div>
+  </header>
+  <form [formGroup]="formulario" (ngSubmit)="guardar()" novalidate class="formulario">
+    <app-campo #campoCodigo class="campo-codigo" identificador="codigo" etiqueta="Código del producto" placeholder="Ej. SK-046"
+               ayuda="Campo obligatorio" [requerido]="true" formControlName="codigo" [error]="error('codigo')" />
+    <app-campo identificador="nombre" etiqueta="Nombre" placeholder="Nombre del producto"
+               ayuda="Campo obligatorio" [requerido]="true" formControlName="nombre" [error]="error('nombre')" />
+    <app-campo identificador="categoria" etiqueta="Categoría" [opciones]="categorias"
+               ayuda="Campo obligatorio" [requerido]="true" formControlName="categoria" [error]="error('categoria')" />
+    <div class="fila-campos">
+      <app-campo identificador="precio" etiqueta="Precio en Bs." tipo="number" placeholder="0.00"
+                 [minimo]="0.01" paso="0.01" [requerido]="true" formControlName="precio" [error]="error('precio')" />
+      <app-campo identificador="stockMinimo" etiqueta="Stock mínimo" tipo="number" [minimo]="30"
+                 paso="1" [requerido]="true" formControlName="stockMinimo" [error]="error('stockMinimo')" />
+    </div>
+    <p class="nota-formulario">Los nuevos productos empiezan con 0 unidades.</p>
+    @if (mensaje()) { <p class="aviso-exito" role="status">{{ mensaje() }}</p> }
+    <div class="acciones-formulario">
+      <app-boton texto="Guardar producto" icono="guardar" variante="principal" tipo="submit" />
+      <app-boton texto="Limpiar" (accion)="limpiar()" />
+    </div>
+  </form>
+</section>

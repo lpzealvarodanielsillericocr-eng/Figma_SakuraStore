@@ -1,0 +1,10 @@
+<button class="boton" [class.principal]="variante === 'principal'"
+        [class.menu-opcion]="variante === 'menu'" [class.activo]="activo"
+        [class.solo-icono]="!texto" [type]="tipo" [disabled]="deshabilitado"
+        [attr.aria-label]="etiqueta || texto" [attr.title]="etiqueta || texto"
+        [attr.aria-pressed]="variante === 'menu' ? activo : null"
+        (click)="accion.emit()">
+  @if (icono) { <app-icono [nombre]="icono" /> }
+  @if (texto) { <span>{{ texto }}</span> }
+  @if (variante === 'menu' && activo) { <span class="punto-activo" aria-hidden="true"></span> }
+</button>

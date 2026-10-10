@@ -1,0 +1,6 @@
+<nav class="menu" aria-label="Menú de inventario">
+  @for (opcion of opciones; track opcion.valor) {
+    <app-boton [texto]="opcion.texto" [icono]="opcion.icono" variante="menu"
+               [activo]="seleccion === opcion.valor" (accion)="seleccionar.emit(opcion.valor)" />
+  }
+</nav>

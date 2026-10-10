@@ -1,0 +1,24 @@
+<div class="campo" [class.campo-compacto]="compacto">
+  <label [for]="identificador" [class.sr-only]="compacto">{{ etiqueta }}</label>
+  <div class="entrada-contenedor" [class.con-icono]="icono">
+    @if (icono) { <app-icono [nombre]="icono" /> }
+    @if (opciones.length) {
+      <select #entrada [id]="identificador" [value]="valor" [disabled]="deshabilitado"
+              [required]="requerido" [attr.aria-invalid]="error ? true : null"
+              [attr.aria-describedby]="error || ayuda ? identificador + '-mensaje' : null"
+              (change)="actualizar($event)" (blur)="tocar()">
+        <option value="">Selecciona una categoría</option>
+        @for (opcion of opciones; track opcion) { <option [value]="opcion">{{ opcion }}</option> }
+      </select>
+    } @else {
+      <input #entrada [id]="identificador" [type]="tipo" [value]="valor"
+             [placeholder]="placeholder" [disabled]="deshabilitado" [required]="requerido"
+             [attr.min]="minimo" [attr.step]="paso" [attr.aria-invalid]="error ? true : null"
+             [attr.aria-describedby]="error || ayuda ? identificador + '-mensaje' : null"
+             (input)="actualizar($event)" (blur)="tocar()">
+    }
+  </div>
+  @if (error || ayuda) {
+    <small [id]="identificador + '-mensaje'" [class.error]="error">{{ error || ayuda }}</small>
+  }
+</div>

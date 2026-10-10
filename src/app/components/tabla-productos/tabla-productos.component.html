@@ -1,0 +1,35 @@
+<section class="tarjeta tabla-tarjeta" aria-labelledby="titulo-tabla">
+  <div class="cabecera-tabla">
+    <div>
+      <h2 id="titulo-tabla">{{ soloBajos ? 'Productos con stock bajo' : 'Lista de productos' }}</h2>
+      <p aria-live="polite">{{ productos.length }} productos encontrados</p>
+    </div>
+    <app-campo identificador="buscar" etiqueta="Buscar productos" tipo="search"
+               placeholder="Buscar por nombre o código" icono="buscar" [compacto]="true" [formControl]="busqueda" />
+  </div>
+  <div class="tabla-scroll" role="region" aria-label="Tabla de productos" tabindex="0">
+    <table>
+      <caption class="sr-only">Inventario de Sakura Store</caption>
+      <thead><tr><th scope="col">Código</th><th scope="col">Nombre</th><th scope="col">Categoría</th><th scope="col" class="numero">Precio</th><th scope="col" class="numero">Stock</th></tr></thead>
+      <tbody>
+        @for (producto of productos; track producto.id) {
+          <tr>
+            <td class="codigo">{{ producto.codigo }}</td>
+            <td class="nombre-producto">{{ producto.nombre }}</td>
+            <td><span class="categoria">{{ producto.categoria }}</span></td>
+            <td class="numero precio">{{ producto.precio | number:'1.2-2' }} Bs</td>
+            <td class="numero">
+              <span class="stock" [class.stock-bajo]="producto.stock < producto.stockMinimo"
+                    [attr.aria-label]="producto.stock + ' unidades; ' + (producto.stock < producto.stockMinimo ? 'por debajo del mínimo' : 'stock disponible')">
+                {{ producto.stock }}
+              </span>
+            </td>
+          </tr>
+        } @empty {
+          <tr><td colspan="5" class="sin-resultados"><app-icono nombre="buscar" /><strong>No encontramos productos.</strong><span>Prueba otra búsqueda o cambia el filtro.</span></td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="leyenda"><span><i class="punto verde"></i> Stock disponible</span><span><i class="punto rojo"></i> Por debajo del mínimo</span></div>
+</section>

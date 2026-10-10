@@ -1,0 +1,6 @@
+<div class="navegacion">
+  <div class="botones-navegacion">
+    <app-boton icono="inicio" etiqueta="Inicio: mostrar todos y limpiar búsqueda" (accion)="inicio.emit()" />
+    <app-boton icono="volver" etiqueta="Volver a la opción anterior" [deshabilitado]="!puedeVolver" (accion)="volver.emit()" />
+  </div>
+</div>

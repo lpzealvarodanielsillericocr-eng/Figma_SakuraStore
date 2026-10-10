@@ -1,0 +1,22 @@
+<a class="saltar-contenido" href="#contenido">Ir al contenido</a>
+<app-barra-titulo />
+<div class="distribucion">
+  <div class="carril-superior">
+    <app-menu [seleccion]="seleccion()" (seleccionar)="seleccionar($event)" />
+    <app-navegacion [puedeVolver]="historial().length > 0" (inicio)="inicio()" (volver)="volver()" />
+  </div>
+  <main id="contenido" tabindex="-1">
+    <div class="encabezado-pagina"><span class="sobre-titulo">Inventario</span><h1>Gestión de productos</h1><p>Consulta existencias y registra nuevos artículos.</p></div>
+    @if (seleccion() === 'ayuda') {
+      <section class="tarjeta ayuda" aria-labelledby="titulo-ayuda">
+        <div><h2 id="titulo-ayuda">¿Cómo usar el inventario?</h2><p>Busca por nombre o código. “Stock bajo” muestra productos por debajo de su mínimo. Para registrar, completa el formulario y pulsa “Guardar producto”.</p><p>Esta práctica guarda datos en memoria: al recargar se restauran los productos de ejemplo.</p></div>
+        <app-boton icono="cerrar" etiqueta="Cerrar ayuda" (accion)="seleccionar('todos')" />
+      </section>
+    }
+    <div class="contenido-grid">
+      <app-tabla-productos [productos]="productosVisibles()" [soloBajos]="seleccion() === 'bajo'" (buscar)="busqueda.set($event)" />
+      <app-formulario-producto (guardado)="productoGuardado()" />
+    </div>
+    <p class="nota-pagina">Sakura Store · Gestión de inventario</p>
+  </main>
+</div>
